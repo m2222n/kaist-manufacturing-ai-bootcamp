@@ -41,6 +41,10 @@ env/
 secrets*
 credentials*
 
+# ===== 발표 산출물 (데이터성, Drive/슬라이드로 공유) =====
+docs/*.png
+docs/*.jpg
+
 # ===== OS / 에디터 =====
 .DS_Store
 .vscode/

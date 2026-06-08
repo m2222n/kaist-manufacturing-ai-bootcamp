@@ -17,17 +17,23 @@
 import numpy as np
 
 
-def gt_solid_voxels(gt_mesh, bounds, res):
+def gt_solid_voxels(gt_mesh, bounds, res, chunk=20000):
     """
     GT mesh 를 carving 과 동일한 격자(bounds, res)에서 solid occupancy 로 voxelize.
     반환: occupancy (rx,ry,rz) bool.
 
     격자 중심점이 mesh 내부인지 contains() 로 판정 (rtree 필요).
     GT STL 은 watertight 이므로 contains 가 정확하다.
+
+    ⚠️ contains() 는 점·면 수가 많으면 (예: 8000면 부품 × 26만 voxel) 중간 배열이
+       수십 GB 로 폭발해 OOM 으로 죽는다 (6/8 17_mks_holder 58GB OOM 사고).
+       점을 chunk 단위로 나눠 호출해 메모리를 상수로 묶는다. 결과는 동일.
     """
     from . import visual_hull as vh
     centers, grid_shape, _ = vh.make_voxel_grid(bounds, res)
-    inside = gt_mesh.contains(centers)
+    inside = np.empty(len(centers), dtype=bool)
+    for i in range(0, len(centers), chunk):
+        inside[i:i + chunk] = gt_mesh.contains(centers[i:i + chunk])
     return inside.reshape(grid_shape)
 
 

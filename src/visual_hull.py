@@ -49,14 +49,18 @@ def carve(centers, views, cam_dist, K, mask_shape):
         uv, z = cam.project(centers, w2c, K)
         u = np.round(uv[:, 0]).astype(int)
         v = np.round(uv[:, 1]).astype(int)
-        inside = (u >= 0) & (u < W) & (v >= 0) & (v < H) & (z > 0)
-        # 화면 밖 또는 카메라 뒤 voxel 은 이 뷰에서 깎지 않음(보수적) → 안전하게 inside 만 검사
+        in_frame = (u >= 0) & (u < W) & (v >= 0) & (v < H)
+        in_front = z > 0
+        # 화면 안 + 카메라 앞 voxel 만 실루엣 전경 판정
         fg = np.zeros(centers.shape[0], dtype=bool)
-        fg[inside] = mask[v[inside], u[inside]]
-        # 화면 밖으로 나간 voxel 은 실루엣 판정 불가 → 그 뷰에서는 통과시킴(깎지 않음).
-        # 단, 카메라 뒤(z<=0)나 명백히 밖이면 깎는 게 맞으나, turntable 커버라
-        # 대부분 화면 안에 들어오므로 보수적 정책 사용.
-        keep_this_view = fg | (~inside)
+        valid = in_frame & in_front
+        fg[valid] = mask[v[valid], u[valid]]
+        # carving 정책 (정확도 우선):
+        #   - 화면 밖(xy) = 무한 흰 배경 = 전경 아님 → 깎는다.
+        #   - 카메라 뒤(z<=0) = 투영 판정 불가 → 그 뷰에서는 통과(깎지 않음).
+        #   배경이 부품 너머 무한 흰색이므로 "프레임 밖 = 배경"이 원리상 맞다.
+        #   render fit=1.05 여유로 부품 본체가 잘릴 일은 없어 정상부 과삭 위험 낮음.
+        keep_this_view = fg | (~in_front)
         occ &= keep_this_view
     return occ
 

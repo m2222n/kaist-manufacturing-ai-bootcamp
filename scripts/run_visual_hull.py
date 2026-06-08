@@ -95,25 +95,28 @@ def main():
     if n_occ == 0:
         raise SystemExit("[ERROR] 빈 결과 — 카메라 포즈 정합 또는 임계값 점검 필요.")
 
-    # 5) mesh
+    # 5) mesh (시각화·Chamfer 용; IoU 는 occupancy 직접 비교라 mesh 불필요)
     recon = vh.volume_to_mesh(volume, vsize, origin=lo)
     print(f"[mesh] 복원 verts={len(recon.vertices):,} faces={len(recon.faces):,}")
 
     # 6) 정량 비교
-    pitch = args.iou_pitch or float(max(extents) / 64.0)
-    iou = met.voxel_iou(met.normalize_for_compare(recon),
-                        met.normalize_for_compare(gt), pitch=pitch)
-    cd = met.chamfer_distance(met.normalize_for_compare(recon),
-                              met.normalize_for_compare(gt))
+    #   IoU: carve occupancy(solid) vs GT solid — 동일 격자에서 직접 비교 (mesh 왕복 X)
+    occ_gt = met.gt_solid_voxels(gt, (lo, hi), args.res)
+    iou = met.voxel_iou_occupancy(volume, occ_gt)
+    cov = met.coverage_stats(volume, occ_gt)
+    #   Chamfer: 표면 형상 비교 (mesh 샘플)
+    cd = met.chamfer_distance(recon, gt)
     result = {
         "part": os.path.basename(args.stl),
         "n_views": len(views),
         "voxel_res": args.res,
         "occupied_voxels": n_occ,
+        "gt_voxels": int(occ_gt.sum()),
         "recon_faces": len(recon.faces),
         "iou": round(iou, 4),
         "chamfer": round(cd, 4),
-        "iou_pitch": round(pitch, 4),
+        "gt_in_hull": round(cov["gt_in_hull"], 4),
+        "hull_inflation": round(cov["hull_inflation"], 4),
     }
     print("[지표] " + json.dumps(result, ensure_ascii=False))
 

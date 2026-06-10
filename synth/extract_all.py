@@ -7,8 +7,9 @@ import h5py
 import numpy as np
 from PIL import Image
 
-DATASET = "/data/jtm/synth_out/dataset_v1"
-OUT = "/data/jtm/synth_out/preview_all"
+import sys as _sys
+DATASET = _sys.argv[1] if len(_sys.argv) > 1 else "/data/jtm/synth_out/dataset_v1"
+OUT = _sys.argv[2] if len(_sys.argv) > 2 else "/data/jtm/synth_out/preview_all"
 os.makedirs(OUT, exist_ok=True)
 
 _rng = np.random.default_rng(12345)

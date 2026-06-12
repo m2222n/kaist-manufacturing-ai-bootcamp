@@ -44,6 +44,8 @@ credentials*
 # ===== 발표 산출물 (데이터성, Drive/슬라이드로 공유) =====
 docs/*.png
 docs/*.jpg
+# v3 검증용 임시 PNG (VS Code 미리보기, 미추적)
+synth/preview_v3/
 
 # ===== OS / 에디터 =====
 .DS_Store

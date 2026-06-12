@@ -8,8 +8,15 @@ import numpy as np
 from PIL import Image
 
 import sys as _sys
-DATASET = _sys.argv[1] if len(_sys.argv) > 1 else "/data/jtm/synth_out/dataset_v1"
-OUT = _sys.argv[2] if len(_sys.argv) > 2 else "/data/jtm/synth_out/preview_all"
+_args = _sys.argv[1:]
+# --depth-key 로 4패널 depth 자리에 쓸 키 지정 (v2_noisy면 depth_noisy)
+DEPTH_KEY = "depth"
+if "--depth-key" in _args:
+    _i = _args.index("--depth-key")
+    DEPTH_KEY = _args[_i + 1]
+    _args = _args[:_i] + _args[_i + 2:]
+DATASET = _args[0] if len(_args) > 0 else "/data/jtm/synth_out/dataset_v1"
+OUT = _args[1] if len(_args) > 1 else "/data/jtm/synth_out/preview_all"
 os.makedirs(OUT, exist_ok=True)
 
 _rng = np.random.default_rng(12345)
@@ -32,7 +39,8 @@ def depth_to_rgb(depth):
 def panel(path, out):
     with h5py.File(path, "r") as f:
         rgb = np.array(f["colors"])[..., :3].astype(np.uint8)
-        depth = np.array(f["depth"]).astype(np.float32)
+        dkey = DEPTH_KEY if DEPTH_KEY in f else "depth"
+        depth = np.array(f[dkey]).astype(np.float32)
         inst = np.array(f["instance_segmaps"]).astype(np.int64)
         cat = np.array(f["category_id_segmaps"]).astype(np.int64)
     imgs = [rgb, depth_to_rgb(depth), colorize(inst), colorize(cat)]

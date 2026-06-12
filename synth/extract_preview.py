@@ -1,5 +1,6 @@
 """hdf5 -> 4패널 PNG (RGB / depth / instance seg / category seg) 육안 검증용.
 사용: python extract_preview.py 160 0 3 352
+     python extract_preview.py --dataset /data/jtm/synth_out/test_v3 --out /data/jtm/synth_out/preview_v3 0 1
 """
 import sys, json
 import h5py
@@ -8,6 +9,19 @@ from PIL import Image
 
 DATASET = "/data/jtm/synth_out/dataset_v1"
 OUT = "/data/jtm/synth_out/preview"
+
+# --dataset / --out 옵션으로 경로 오버라이드 (없으면 위 기본값)
+_args = sys.argv[1:]
+def _take(flag, default):
+    global _args
+    if flag in _args:
+        i = _args.index(flag)
+        val = _args[i + 1]
+        _args = _args[:i] + _args[i + 2:]
+        return val
+    return default
+DATASET = _take("--dataset", DATASET)
+OUT = _take("--out", OUT)
 
 import os
 os.makedirs(OUT, exist_ok=True)
@@ -53,6 +67,6 @@ def panel(scene):
     print(f"scene {scene}: instances={n_inst}  categories={cats}  "
           f"depth[{depth[depth>0].min():.3f}~{depth.max():.3f}m]  -> scene{scene}_4panel.png")
 
-for s in sys.argv[1:]:
+for s in _args:
     panel(int(s))
 print(f"\n저장 위치: {OUT}/  (RGB | depth | instance-seg | category-seg)")

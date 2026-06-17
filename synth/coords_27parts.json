@@ -1,0 +1,596 @@
+[
+  {
+    "name": "01_sol_block_a.stl",
+    "com_world_mm": [
+      3.344,
+      95.791,
+      46.371
+    ],
+    "principal_quat_wxyz": [
+      -0.46197,
+      0.53722,
+      0.5242,
+      0.47243
+    ],
+    "canonical_bbox_mm": [
+      12.65,
+      46.91,
+      60.27
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 12.65,
+    "grasp_mid_width_mm": 46.91
+  },
+  {
+    "name": "02_sol_block_b.stl",
+    "com_world_mm": [
+      2.835,
+      86.315,
+      44.742
+    ],
+    "principal_quat_wxyz": [
+      0.50891,
+      -0.49028,
+      0.485,
+      0.51518
+    ],
+    "canonical_bbox_mm": [
+      9.33,
+      45.41,
+      57.13
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 9.33,
+    "grasp_mid_width_mm": 45.41
+  },
+  {
+    "name": "03_sol_block_front.stl",
+    "com_world_mm": [
+      0.272,
+      71.37,
+      36.305
+    ],
+    "principal_quat_wxyz": [
+      0.12432,
+      0.66075,
+      0.67271,
+      -0.3089
+    ],
+    "canonical_bbox_mm": [
+      39.85,
+      62.32,
+      67.94
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 39.85,
+    "grasp_mid_width_mm": 62.32
+  },
+  {
+    "name": "06_sol_block_back.stl",
+    "com_world_mm": [
+      3.553,
+      71.303,
+      38.937
+    ],
+    "principal_quat_wxyz": [
+      -0.28166,
+      -0.55651,
+      0.67382,
+      -0.39614
+    ],
+    "canonical_bbox_mm": [
+      37.87,
+      63.11,
+      64.19
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 37.87,
+    "grasp_mid_width_mm": 63.11
+  },
+  {
+    "name": "07_guide_paper_l.stl",
+    "com_world_mm": [
+      -99.27,
+      144.335,
+      13.911
+    ],
+    "principal_quat_wxyz": [
+      0.5173,
+      -0.49532,
+      -0.54,
+      0.44211
+    ],
+    "canonical_bbox_mm": [
+      31.62,
+      78.09,
+      122.81
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 31.62,
+    "grasp_mid_width_mm": 78.09
+  },
+  {
+    "name": "08_r_guide_a.stl",
+    "com_world_mm": [
+      -1.048,
+      149.692,
+      30.93
+    ],
+    "principal_quat_wxyz": [
+      0.70701,
+      0.00477,
+      -0.70716,
+      0.00597
+    ],
+    "canonical_bbox_mm": [
+      35.16,
+      40.92,
+      271.01
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 35.16,
+    "grasp_mid_width_mm": 40.92
+  },
+  {
+    "name": "09_guide_paper_r.stl",
+    "com_world_mm": [
+      107.342,
+      147.149,
+      13.87
+    ],
+    "principal_quat_wxyz": [
+      0.50111,
+      0.52496,
+      0.44048,
+      0.52847
+    ],
+    "canonical_bbox_mm": [
+      31.66,
+      59.21,
+      120.06
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 31.66,
+    "grasp_mid_width_mm": 59.21
+  },
+  {
+    "name": "11_sw_block.stl",
+    "com_world_mm": [
+      -0.424,
+      11.4,
+      9.595
+    ],
+    "principal_quat_wxyz": [
+      0.50017,
+      -0.49983,
+      -0.49983,
+      -0.50017
+    ],
+    "canonical_bbox_mm": [
+      7.0,
+      7.12,
+      22.0
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 7.0,
+    "grasp_mid_width_mm": 7.12
+  },
+  {
+    "name": "13_variant.stl",
+    "com_world_mm": [
+      279.404,
+      63.79,
+      163.198
+    ],
+    "principal_quat_wxyz": [
+      0.73831,
+      0.67446,
+      -0.00042,
+      0.00119
+    ],
+    "canonical_bbox_mm": [
+      6.09,
+      47.56,
+      43.55
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 6.09,
+    "grasp_mid_width_mm": 43.55
+  },
+  {
+    "name": "13_x2_bcf8ccb4.stl",
+    "com_world_mm": [
+      285.121,
+      77.083,
+      166.686
+    ],
+    "principal_quat_wxyz": [
+      0.02886,
+      -0.05461,
+      0.98767,
+      -0.14384
+    ],
+    "canonical_bbox_mm": [
+      18.97,
+      38.92,
+      49.39
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 18.97,
+    "grasp_mid_width_mm": 38.92
+  },
+  {
+    "name": "14_13.stl",
+    "com_world_mm": [
+      279.402,
+      63.407,
+      164.434
+    ],
+    "principal_quat_wxyz": [
+      0.69786,
+      0.71624,
+      -0.00051,
+      0.00114
+    ],
+    "canonical_bbox_mm": [
+      6.09,
+      46.25,
+      41.9
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 6.09,
+    "grasp_mid_width_mm": 41.9
+  },
+  {
+    "name": "15_roller_bracket.stl",
+    "com_world_mm": [
+      -34.097,
+      150.0,
+      -9.373
+    ],
+    "principal_quat_wxyz": [
+      -0.00526,
+      -0.00526,
+      0.70709,
+      0.70709
+    ],
+    "canonical_bbox_mm": [
+      10.26,
+      17.65,
+      40.0
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 10.26,
+    "grasp_mid_width_mm": 17.65
+  },
+  {
+    "name": "16_cam_f_bracket.stl",
+    "com_world_mm": [
+      -152.144,
+      70.447,
+      -53.31
+    ],
+    "principal_quat_wxyz": [
+      0.67758,
+      0.27581,
+      0.41344,
+      -0.54212
+    ],
+    "canonical_bbox_mm": [
+      20.85,
+      30.08,
+      47.73
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 20.85,
+    "grasp_mid_width_mm": 30.08
+  },
+  {
+    "name": "17_mks_holder.stl",
+    "com_world_mm": [
+      -0.0,
+      -5.782,
+      0.0
+    ],
+    "principal_quat_wxyz": [
+      0.5,
+      0.5,
+      0.5,
+      -0.5
+    ],
+    "canonical_bbox_mm": [
+      11.0,
+      82.5,
+      131.3
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 11.0,
+    "grasp_mid_width_mm": 82.5
+  },
+  {
+    "name": "18_button_function_niro.stl",
+    "com_world_mm": [
+      0.153,
+      155.312,
+      89.379
+    ],
+    "principal_quat_wxyz": [
+      0.00503,
+      0.70702,
+      0.00578,
+      0.70716
+    ],
+    "canonical_bbox_mm": [
+      15.72,
+      42.45,
+      110.45
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 15.72,
+    "grasp_mid_width_mm": 42.45
+  },
+  {
+    "name": "bracket_case.stl",
+    "com_world_mm": [
+      0.0,
+      -0.601,
+      -0.352
+    ],
+    "principal_quat_wxyz": [
+      0.39964,
+      0.58334,
+      0.39964,
+      -0.58334
+    ],
+    "canonical_bbox_mm": [
+      4.16,
+      6.86,
+      10.0
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 4.16,
+    "grasp_mid_width_mm": 6.86
+  },
+  {
+    "name": "bracket_sen_1.stl",
+    "com_world_mm": [
+      284.154,
+      73.847,
+      176.196
+    ],
+    "principal_quat_wxyz": [
+      -0.01305,
+      -0.01493,
+      0.9811,
+      0.19249
+    ],
+    "canonical_bbox_mm": [
+      17.04,
+      50.28,
+      68.61
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 17.04,
+    "grasp_mid_width_mm": 50.28
+  },
+  {
+    "name": "bracket_sensor1.stl",
+    "com_world_mm": [
+      284.559,
+      84.357,
+      167.066
+    ],
+    "principal_quat_wxyz": [
+      0.96854,
+      0.18517,
+      0.012,
+      -0.16583
+    ],
+    "canonical_bbox_mm": [
+      16.68,
+      30.58,
+      43.12
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 16.68,
+    "grasp_mid_width_mm": 30.58
+  },
+  {
+    "name": "bracket_sensor2.stl",
+    "com_world_mm": [
+      0.0,
+      0.545,
+      -0.175
+    ],
+    "principal_quat_wxyz": [
+      -0.00309,
+      0.7071,
+      0.7071,
+      -0.00309
+    ],
+    "canonical_bbox_mm": [
+      2.75,
+      4.8,
+      34.85
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 2.75,
+    "grasp_mid_width_mm": 4.8
+  },
+  {
+    "name": "brkt_switch.stl",
+    "com_world_mm": [
+      0.0,
+      -5.743,
+      -4.662
+    ],
+    "principal_quat_wxyz": [
+      -0.21398,
+      0.67395,
+      0.67395,
+      -0.21398
+    ],
+    "canonical_bbox_mm": [
+      18.1,
+      20.0,
+      30.15
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 18.1,
+    "grasp_mid_width_mm": 20.0
+  },
+  {
+    "name": "guide_paper_roll_cover_left.stl",
+    "com_world_mm": [
+      -106.748,
+      19.016,
+      31.218
+    ],
+    "principal_quat_wxyz": [
+      0.67756,
+      -0.21254,
+      -0.22344,
+      0.66769
+    ],
+    "canonical_bbox_mm": [
+      22.14,
+      29.41,
+      76.46
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 22.14,
+    "grasp_mid_width_mm": 29.41
+  },
+  {
+    "name": "guide_paper_roll_cover_right.stl",
+    "com_world_mm": [
+      103.761,
+      19.126,
+      31.088
+    ],
+    "principal_quat_wxyz": [
+      -0.22291,
+      -0.6641,
+      0.68042,
+      0.21521
+    ],
+    "canonical_bbox_mm": [
+      22.14,
+      23.36,
+      76.32
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 22.14,
+    "grasp_mid_width_mm": 23.36
+  },
+  {
+    "name": "main_body.stl",
+    "com_world_mm": [
+      1008.97,
+      5.841,
+      3.0
+    ],
+    "principal_quat_wxyz": [
+      0.48641,
+      0.51323,
+      0.48641,
+      0.51323
+    ],
+    "canonical_bbox_mm": [
+      6.0,
+      25.65,
+      32.26
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 6.0,
+    "grasp_mid_width_mm": 25.65
+  },
+  {
+    "name": "plate_e.stl",
+    "com_world_mm": [
+      -158.221,
+      39.3,
+      -38.079
+    ],
+    "principal_quat_wxyz": [
+      0.53094,
+      -0.53094,
+      -0.46702,
+      0.46702
+    ],
+    "canonical_bbox_mm": [
+      22.02,
+      47.18,
+      56.0
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 22.02,
+    "grasp_mid_width_mm": 47.18
+  },
+  {
+    "name": "r_guide_a_l.stl",
+    "com_world_mm": [
+      -61.377,
+      150.032,
+      31.482
+    ],
+    "principal_quat_wxyz": [
+      0.68442,
+      -0.0009,
+      0.72909,
+      0.0
+    ],
+    "canonical_bbox_mm": [
+      42.83,
+      40.2,
+      163.14
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 40.2,
+    "grasp_mid_width_mm": 42.83
+  },
+  {
+    "name": "r_guide_a_r.stl",
+    "com_world_mm": [
+      90.111,
+      149.056,
+      30.303
+    ],
+    "principal_quat_wxyz": [
+      0.75354,
+      -0.03818,
+      0.65625,
+      -0.00743
+    ],
+    "canonical_bbox_mm": [
+      44.82,
+      45.55,
+      118.04
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 44.82,
+    "grasp_mid_width_mm": 45.55
+  },
+  {
+    "name": "top_inner_sheet.stl",
+    "com_world_mm": [
+      -142.0,
+      195.479,
+      -35.0
+    ],
+    "principal_quat_wxyz": [
+      0.5,
+      -0.5,
+      0.5,
+      0.5
+    ],
+    "canonical_bbox_mm": [
+      1.0,
+      18.98,
+      19.0
+    ],
+    "n_keypoints": 14,
+    "grasp_min_width_mm": 1.0,
+    "grasp_mid_width_mm": 18.98
+  }
+]

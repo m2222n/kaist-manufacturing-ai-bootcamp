@@ -52,3 +52,17 @@ synth/preview_v3/
 .vscode/
 .idea/
 *.swp
+
+# ===== 내부 작업메모 (회사 정보·호칭 포함, push 금지) =====
+docs/A100_조율문의_초안_0623.md
+docs/조교_실물촬영_피드백요청_0623.md
+docs/조교_코드최적화_공유_0623.md
+docs/조교_Detection방식_정리_0617.md
+docs/다음_ToDo_0623.md
+docs/PPT_context_2차_0625.md
+docs/발표스크립트_2차_0625.md
+docs/주간보고서_2주차_초안.md
+docs/주간보고서_3주차_초안.md
+docs/주간보고서_3주차_웹클로드_컨텍스트.md
+docs/조교_3D좌표_사전보고_0617.md
+docs/figs_2차/

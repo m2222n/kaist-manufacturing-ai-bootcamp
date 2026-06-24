@@ -1,0 +1,21 @@
+{
+  "loss_bbox": 0.05105539008975029,
+  "loss_cad_align": 0.21806870698928832,
+  "loss_cad_ce": 1.0544727194309234,
+  "loss_ce": 0.7856292295455932,
+  "loss_dice": 0.09268793925642967,
+  "loss_giou": 0.3402952283620834,
+  "loss_mask": 0.01101802779827267,
+  "loss_total": 3.8126241779327392,
+  "num_gt_objects": 850.0,
+  "num_matched": 850.0,
+  "hungarian_recall": 1.0,
+  "matched_class_acc": 0.8035294117647059,
+  "matched_box_iou": 0.6818884790644926,
+  "matched_mask_iou": 0.8546763591205373,
+  "num_cad_valid": 850.0,
+  "matched_cad_acc": 0.7976470588235294,
+  "source": "2d_dataset/splits/test.json",
+  "checkpoint": "runs/depth_vq_detector_split/best.pt",
+  "num_scenes": 100
+}

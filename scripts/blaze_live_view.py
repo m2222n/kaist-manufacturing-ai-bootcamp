@@ -92,26 +92,32 @@ def colorize(depth: np.ndarray) -> np.ndarray:
 def part_stats(depth: np.ndarray, band_mm: int = 200):
     """부품 중심 지표 — 화면은 안 건드리고 '부품이 잘 잡혔나'만 숫자로.
 
-    가까이(30~40cm) 찍으면 전체 valid%는 낮게 나오지만(배경 NaN=정상, 합성과 일치),
-    정작 봐야 할 건 '부품 픽셀이 두껍게·또렷하게 잡혔나'다. 그래서:
-      - 부품 거리대 = valid depth의 하위(가까운) 클러스터. 가장 가까운 픽셀(p2)부터
-        band_mm(기본 12cm) 안쪽을 부품으로 본다(박스 바닥보다 부품이 카메라에 가깝다는 가정).
-      - part_med = 부품 median 거리(mm) — 0.3~0.4m 들어오는지 확인용
-      - part_px  = 부품 픽셀 수(천 단위) — 화각을 충분히 채우는지
-      - fill     = 부품 영역 내부가 안 비고 채워진 비율(%) — 구멍·flying pixel 적을수록 ↑
+    배경이 NaN으로 빠지고 부품만 남은 장면에서는 valid 픽셀 대부분이 '부품 거리'에
+    몰려 있다. 그래서 가장 가까운 픽셀(노이즈에 취약) 대신 **히스토그램 피크(최빈 거리)**
+    를 부품 중심으로 잡고, 그 ±band/2 를 부품 거리대로 본다.
+      - part_med = 부품 median 거리(mm)
+      - part_px  = 부품 픽셀 수 — 화각을 충분히 채우는지
+      - fill     = 부품 bbox 안 채움 비율(%) — 구멍·flying pixel 적을수록 ↑
     반환: (part_med_mm, part_px, fill_pct, near_mm, far_mm)
     """
     valid = depth[depth > 0]
     if valid.size < 50:
         return 0, 0, 0.0, 0, 0
-    near = int(np.percentile(valid, 2))              # 가장 가까운 표면(노이즈 컷)
-    far = near + band_mm                             # 부품 거리대 상한
+    # 2~98% 범위를 2cm bin 히스토그램 → 가장 픽셀 많은 거리(최빈)가 부품
+    lo, hi = np.percentile(valid, [2, 98])
+    bins = np.arange(int(lo), int(hi) + 20, 20)
+    if bins.size < 2:
+        peak = int(np.median(valid))
+    else:
+        h, edges = np.histogram(valid, bins=bins)
+        peak = int((edges[h.argmax()] + edges[h.argmax() + 1]) / 2)
+    near = max(0, peak - band_mm // 2)
+    far = peak + band_mm // 2
     part = (depth >= near) & (depth <= far)
     part_px = int(part.sum())
     if part_px == 0:
         return 0, 0, 0.0, near, far
     part_med = int(np.median(depth[part]))
-    # fill = 부품 bbox 안에서 실제 부품 픽셀 비율(구멍 적을수록 1에 가까움)
     ys, xs = np.where(part)
     bbox_area = max((ys.max()-ys.min()+1) * (xs.max()-xs.min()+1), 1)
     fill = 100.0 * part_px / bbox_area
@@ -149,9 +155,10 @@ def main():
             if args.scale != 1.0:
                 vis = cv2.resize(vis, None, fx=args.scale, fy=args.scale,
                                  interpolation=cv2.INTER_NEAREST)
-            # 부품 거리(Blaze FOV 넓어 0.8~1.0m가 현실 최적: 부품만 크게+박스벽 화각밖)
-            # ·부품 픽셀(클수록 화각 채움)·채움률(구멍 적을수록 ↑)
-            ok = "OK" if (700 <= p_med <= 1100 and p_px > 4000 and fill >= 25) else ".."
+            # OK 판정 = 부품만 깨끗하게 + 화각 충분히 채움 (거리 절대값보다 이게 본질)
+            #  - all valid 낮음(<35%) = 배경이 NaN으로 빠짐 = 부품만 = 합성과 일치 ✅
+            #  - 부품 픽셀 크고(>10k) 채움 좋으면(>=35%) 형태 또렷
+            ok = "OK" if (pct < 35 and p_px > 10000 and fill >= 35) else ".."
             txt1 = f"PART med={p_med}mm px={p_px//1000}k fill={fill:.0f}% [{ok}]"
             txt2 = f"(all valid={pct:.0f}% band={near}-{far}mm fps={fps:.1f})"
             cv2.putText(vis, txt1, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)

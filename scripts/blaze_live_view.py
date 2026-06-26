@@ -89,7 +89,7 @@ def colorize(depth: np.ndarray) -> np.ndarray:
     return color
 
 
-def part_stats(depth: np.ndarray, band_mm: int = 120):
+def part_stats(depth: np.ndarray, band_mm: int = 200):
     """부품 중심 지표 — 화면은 안 건드리고 '부품이 잘 잡혔나'만 숫자로.
 
     가까이(30~40cm) 찍으면 전체 valid%는 낮게 나오지만(배경 NaN=정상, 합성과 일치),
@@ -149,8 +149,9 @@ def main():
             if args.scale != 1.0:
                 vis = cv2.resize(vis, None, fx=args.scale, fy=args.scale,
                                  interpolation=cv2.INTER_NEAREST)
-            # 부품 거리(0.3~0.4m 권장)·부품 픽셀(클수록 화각 채움)·채움률(구멍 적을수록 ↑)
-            ok = "OK" if (300 <= p_med <= 450 and p_px > 8000 and fill >= 55) else ".."
+            # 부품 거리(Blaze FOV 넓어 0.8~1.0m가 현실 최적: 부품만 크게+박스벽 화각밖)
+            # ·부품 픽셀(클수록 화각 채움)·채움률(구멍 적을수록 ↑)
+            ok = "OK" if (700 <= p_med <= 1100 and p_px > 4000 and fill >= 25) else ".."
             txt1 = f"PART med={p_med}mm px={p_px//1000}k fill={fill:.0f}% [{ok}]"
             txt2 = f"(all valid={pct:.0f}% band={near}-{far}mm fps={fps:.1f})"
             cv2.putText(vis, txt1, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)

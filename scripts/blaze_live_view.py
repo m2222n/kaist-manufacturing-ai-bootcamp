@@ -89,6 +89,35 @@ def colorize(depth: np.ndarray) -> np.ndarray:
     return color
 
 
+def part_stats(depth: np.ndarray, band_mm: int = 120):
+    """부품 중심 지표 — 화면은 안 건드리고 '부품이 잘 잡혔나'만 숫자로.
+
+    가까이(30~40cm) 찍으면 전체 valid%는 낮게 나오지만(배경 NaN=정상, 합성과 일치),
+    정작 봐야 할 건 '부품 픽셀이 두껍게·또렷하게 잡혔나'다. 그래서:
+      - 부품 거리대 = valid depth의 하위(가까운) 클러스터. 가장 가까운 픽셀(p2)부터
+        band_mm(기본 12cm) 안쪽을 부품으로 본다(박스 바닥보다 부품이 카메라에 가깝다는 가정).
+      - part_med = 부품 median 거리(mm) — 0.3~0.4m 들어오는지 확인용
+      - part_px  = 부품 픽셀 수(천 단위) — 화각을 충분히 채우는지
+      - fill     = 부품 영역 내부가 안 비고 채워진 비율(%) — 구멍·flying pixel 적을수록 ↑
+    반환: (part_med_mm, part_px, fill_pct, near_mm, far_mm)
+    """
+    valid = depth[depth > 0]
+    if valid.size < 50:
+        return 0, 0, 0.0, 0, 0
+    near = int(np.percentile(valid, 2))              # 가장 가까운 표면(노이즈 컷)
+    far = near + band_mm                             # 부품 거리대 상한
+    part = (depth >= near) & (depth <= far)
+    part_px = int(part.sum())
+    if part_px == 0:
+        return 0, 0, 0.0, near, far
+    part_med = int(np.median(depth[part]))
+    # fill = 부품 bbox 안에서 실제 부품 픽셀 비율(구멍 적을수록 1에 가까움)
+    ys, xs = np.where(part)
+    bbox_area = max((ys.max()-ys.min()+1) * (xs.max()-xs.min()+1), 1)
+    fill = 100.0 * part_px / bbox_area
+    return part_med, part_px, fill, near, far
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ip", default=os.environ.get("BASLER_BLAZE_IP", "<BLAZE_IP>"))
@@ -114,15 +143,19 @@ def main():
             depth = res.Array.copy(); res.Release()
             now = time.time(); fps = 0.9*fps + 0.1*(1.0/max(now-last, 1e-3)); last = now
             valid = depth[depth > 0]
-            med = int(np.median(valid)) if valid.size else 0
-            pct = 100*valid.size/depth.size
+            pct = 100*valid.size/depth.size                       # 전체 valid(참고용)
+            p_med, p_px, fill, near, far = part_stats(depth)      # 부품 중심 지표(핵심)
             vis = colorize(depth)
             if args.scale != 1.0:
                 vis = cv2.resize(vis, None, fx=args.scale, fy=args.scale,
                                  interpolation=cv2.INTER_NEAREST)
-            txt = f"med={med}mm valid={pct:.0f}% fps={fps:.1f}"
-            cv2.putText(vis, txt, (10, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255,255,255), 2)
-            cv2.putText(vis, "[s]save [q]quit", (10, 56), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200,200,200), 1)
+            # 부품 거리(0.3~0.4m 권장)·부품 픽셀(클수록 화각 채움)·채움률(구멍 적을수록 ↑)
+            ok = "OK" if (300 <= p_med <= 450 and p_px > 8000 and fill >= 55) else ".."
+            txt1 = f"PART med={p_med}mm px={p_px//1000}k fill={fill:.0f}% [{ok}]"
+            txt2 = f"(all valid={pct:.0f}% band={near}-{far}mm fps={fps:.1f})"
+            cv2.putText(vis, txt1, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
+            cv2.putText(vis, txt2, (10, 58), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200,200,200), 1)
+            cv2.putText(vis, "[s]save [q]quit", (10, 82), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (200,200,200), 1)
             cv2.imshow(win, vis)
             k = cv2.waitKey(1) & 0xFF
             if k in (ord('q'), 27):
@@ -132,7 +165,8 @@ def main():
                 base = os.path.join(args.out, f"live_{stamp}")
                 np.save(base + ".npy", depth)
                 cv2.imwrite(base + ".png", vis)
-                print(f"saved {base}.npy/.png  med={med}mm valid={pct:.0f}%")
+                print(f"saved {base}.npy/.png  PART med={p_med}mm px={p_px}({p_px//1000}k) "
+                      f"fill={fill:.0f}%  band={near}-{far}mm  all_valid={pct:.0f}%")
     finally:
         cam.StopGrabbing(); cam.Close(); cv2.destroyAllWindows()
         print("종료. 저장 →", args.out)

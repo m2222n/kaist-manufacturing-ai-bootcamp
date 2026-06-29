@@ -1,0 +1,74 @@
+{
+  "_about": "실증 100장 그룹↔부품 정답지 + 27종 공식 category_id(합성과 동일). 6/29 정태민 CAD대조 매핑. 배치=무작위.",
+  "_caveat": "그룹(빈) 레벨 후보. 픽셀↔부품 instance 매핑은 labelme 라벨링으로 별도 진행 중(6/29~).",
+  "_png_scale": "label_png(1696x960) = npy(848x480) x2. labelme polygon 좌표는 ÷2로 npy 매핑.",
+  "shot_ranges": {
+    "g1": "shot_001~034 (34)",
+    "g2": "shot_035~067 (33)",
+    "g3": "shot_068~100 (33)"
+  },
+  "category_id": {
+    "01_sol_block_a": 1,
+    "03_sol_block_front": 3,
+    "08_r_guide_a": 6,
+    "13_variant": 9,
+    "18_button_function_niro": 15,
+    "bracket_sen_1": 17,
+    "main_body": 23,
+    "r_guide_a_r": 26,
+    "top_inner_sheet": 27,
+    "09_guide_paper_r": 7,
+    "14_13": 11,
+    "16_cam_f_bracket": 13,
+    "bracket_case": 16,
+    "bracket_sensor1": 18,
+    "bracket_sensor2": 19,
+    "brkt_switch": 20,
+    "plate_e": 24,
+    "r_guide_a_l": 25,
+    "02_sol_block_b": 2,
+    "06_sol_block_back": 4,
+    "07_guide_paper_l": 5,
+    "11_sw_block": 8,
+    "13_x2_bcf8ccb4": 10,
+    "15_roller_bracket": 12,
+    "17_mks_holder": 14,
+    "guide_paper_roll_cover_left": 21,
+    "guide_paper_roll_cover_right": 22
+  },
+  "groups": {
+    "g1": [
+      "01_sol_block_a",
+      "03_sol_block_front",
+      "08_r_guide_a",
+      "13_variant",
+      "18_button_function_niro",
+      "bracket_sen_1",
+      "main_body",
+      "r_guide_a_r",
+      "top_inner_sheet"
+    ],
+    "g2": [
+      "09_guide_paper_r",
+      "14_13",
+      "16_cam_f_bracket",
+      "bracket_case",
+      "bracket_sensor1",
+      "bracket_sensor2",
+      "brkt_switch",
+      "plate_e",
+      "r_guide_a_l"
+    ],
+    "g3": [
+      "02_sol_block_b",
+      "06_sol_block_back",
+      "07_guide_paper_l",
+      "11_sw_block",
+      "13_x2_bcf8ccb4",
+      "15_roller_bracket",
+      "17_mks_holder",
+      "guide_paper_roll_cover_left",
+      "guide_paper_roll_cover_right"
+    ]
+  }
+}
